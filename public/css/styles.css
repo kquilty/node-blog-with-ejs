@@ -1,0 +1,97 @@
+/*
+.site-title {
+    ...
+} 
+*/
+
+body{
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+    
+    /* Font */
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500; /* 200 to 1000 */
+    font-style: normal;
+}
+p, h1, h2, h3, a, ul{
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    color: #222;
+}
+footer{
+    color: #858585;
+    text-align: center;
+    margin: 80px auto 20px;
+    font-size: .8em
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+
+    h1 {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    border-bottom: 1px solid silver;
+    padding-bottom: 2px;
+    margin-bottom: 2px;
+}
+.nav-links-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.nav-link {
+    padding-left: 15px;
+}
+.site-title {
+    font-size: 2em;
+    font-weight: 800;
+}
+.site-subtitle {
+    font-size: 1.2em;
+}
+.page-title {
+    border: 1px solid black;
+}
+.content {
+    margin: 20px;
+}
+
+.blog-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 24px;
+    margin: 24px 0;
+    transition: box-shadow 0.2s;
+}
+.blog-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.blog-title {
+    font-size: 2.2em;
+}
+.blog-snippet {
+    font-size: 1.5em;
+}
+
+.dancing-script-medium {
+  font-family: "Dancing Script", cursive;
+  font-optical-sizing: auto;
+  font-weight: 500; /* 400 to 700 */
+  font-style: normal;
+}
+.nunito-medium {
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500; /* 200 to 1000 */
+  font-style: normal;
+}

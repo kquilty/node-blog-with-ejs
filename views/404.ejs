@@ -1,0 +1,14 @@
+<html lang="en">
+<%- include('./partials/head.ejs') %>
+<body>
+    <%- include('./partials/nav.ejs') %>
+
+    <div class="content">
+
+        This so called <span style="color: #a11b1b">"<%= attempted_url.replace(/<\/?[^>]+(>|$)/g, "") %>"</span> page doesn't exist.
+
+    </div>
+    
+    <%- include('./partials/footer.ejs') %>
+</body>
+</html>
