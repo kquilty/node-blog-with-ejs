@@ -17,8 +17,12 @@
             <%= blog.body %>
         </div>
 
-        <div class="blog-details-delete-btn">
-            <a onclick="return handleDeleteClick('<%= blog._id %>')">Delete</a>
+        <div class="delete-icon-wrapper">
+            <span class="delete-icon">
+                <a onclick="return handleDeleteClick('<%= blog._id %>')">
+                    <img src="/images/trashcan.svg" alt="Delete">
+                </a>
+            </span>
         </div>
 
     </div>
