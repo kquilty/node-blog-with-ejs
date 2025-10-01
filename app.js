@@ -161,6 +161,35 @@ app.post('/blogs', (req, res) => { // New blog posted
 });
 
 
+app.get('/blogs/:blog_id', (req, res) => {
+    Blog.findById( req.params.blog_id )
+    .then((result) => {
+        
+        res.render('details', {
+            site_title, 
+            blog: result
+        });
+
+    })
+    .catch((error) => console.log(error));
+});
+
+
+app.delete('/blogs/:blog_id', (req, res) => {
+    
+    Blog.findByIdAndDelete( req.params.blog_id )
+        .then((result) => {
+            console.log('Deleted '+req.params.blog_id);
+            
+            //res.redirect('/blogs'); <---- can't do this because this is an ajax call
+
+            res.json({
+                redirect: '/blogs'
+            });
+        })
+        .catch((error) => console.log(error));
+});
+
 // Redirect some old pages
 app.get('/about-us', (req, res) => {
     res.redirect('/about');

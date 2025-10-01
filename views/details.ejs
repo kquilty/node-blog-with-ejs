@@ -1,0 +1,51 @@
+<html lang="en">
+<%- include('./partials/head.ejs') %>
+<body>
+    <%- include('./partials/nav.ejs') %>
+
+    <div class="content">
+
+        I am blog <%= blog._id %>
+
+        <h2><%= blog.title %></h2>
+
+        <div class="blog-details-snippet">
+            <%= blog.snippet %>
+        </div>
+
+        <div class="blog-details-body">
+            <%= blog.body %>
+        </div>
+
+        <div class="blog-details-delete-btn">
+            <a onclick="return handleDeleteClick('<%= blog._id %>')">Delete</a>
+        </div>
+
+    </div>
+    
+    <%- include('./partials/footer.ejs') %>
+
+    <script>
+        function handleDeleteClick(blog_id) {
+            if(!confirm('Delete this blog?')) {
+                return false;
+            }
+
+            console.log('deleting '+blog_id+'...');
+
+            const endpoint = '/blogs/'+blog_id;
+
+            fetch(endpoint, {
+                method: 'DELETE'
+            })
+            .then((response) => response.json())
+            .then((data) => {
+              window.location = data.redirect;
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        }
+    </script>
+</body>
+</html>
