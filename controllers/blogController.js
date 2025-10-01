@@ -46,15 +46,21 @@ const blog_new_post = (req, res) => {
 
 const blog_view_details = (req, res) => {
     Blog.findById( req.params.blog_id )
-    .then((result) => {
-        
-        res.render('blogs/details', {
-            site_title, 
-            blog: result
-        });
+        .then((result) => {
+            
+            res.render('blogs/details', {
+                site_title, 
+                blog: result
+            });
 
-    })
-    .catch((error) => console.log(error));
+        })
+        .catch((error) => {
+            console.log(error);
+            res.status(404).render('404', {
+                site_title,
+                custom_message: 'Invalid blog ID: "'+req.params.blog_id+'"'
+            });
+        });
 }
 
 const blog_delete = (req, res) => {

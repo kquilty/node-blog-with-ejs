@@ -5,7 +5,12 @@
 
     <div class="content">
 
-        This so called <span style="color: #a11b1b">"<%= attempted_url.replace(/<\/?[^>]+(>|$)/g, "") %>"</span> page doesn't exist.
+        <% if (custom_message) { %>
+            <%= custom_message %>
+        <% } else if (attempted_url) { %>
+            This so called <span style="color: #a11b1b">"<%= attempted_url.replace(/<\/?[^>]+(>|$)/g, "") %>"</span> page doesn't exist.
+        <% } else  %>
+        
 
     </div>
     
