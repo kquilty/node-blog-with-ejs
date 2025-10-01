@@ -1,21 +1,22 @@
 const express = require('express');
-const morgan = require('morgan');//<--------- middleware for logging
-const mongoose = require('mongoose');//<----- middleware for better DB interaction
-const blogRoutes = require('./routes/blogRoutes');
-
 const app = express();
 
-// Use EJS as the view engine
-app.set('view engine', 'ejs');// by default, looks in "./views"
-
-// middleware & static files
+app.set('view engine', 'ejs');//<------------------------ Use EJS as the view engine (by default, looks in "./views")
 app.use(express.static('public'));//<-------------------- Make "/public" accessable to the browser
-app.use(morgan('dev'));//<------------------------------- Log request to console
 app.use(express.urlencoded({ extended: true}));//<------- Pass incoming urlencoded data into "req.body"
 
 
+
+// LOGS ------------------------------------------------------------------------------------------
+const morgan = require('morgan');//<--------- middleware for logging
+app.use(morgan('dev'));//<------------------- Log request to console
+
+
+
+// DATABASE --------------------------------------------------------------------------------------
 // 1. Connect to DB (mongodb, using "mongoose")
 // 2. Begin watching
+const mongoose = require('mongoose');//<----- middleware for better DB interaction
 const targetDbClusterName = 'Cluster0';
 const targetDbName = 'node-blog';
 const targetDbUser = 'kquilty_db_user';
@@ -35,6 +36,7 @@ mongoose.connect(dbURI)
     });
 
 
+
 // ROUTES --------------------------------------------------------------------------------------
 // Top Level Routes
 app.get('/', (req, res) => {
@@ -45,12 +47,14 @@ app.get('/about', (req, res) => {
 });
 
 // Blog routes
+const blogRoutes = require('./routes/blogRoutes');
 app.use('/blogs', blogRoutes);
 
-// RedirectS
+// Redirects
 app.get('/about-us', (req, res) => {
     res.redirect('/about');
 });
+
 
 
 // 404 FALLBACK ---------------------------------------------------------------------------------
