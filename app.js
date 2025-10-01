@@ -1,9 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');//<--------- middleware for logging
 const mongoose = require('mongoose');//<----- middleware for better DB interaction
-
-// Models
-const Blog = require('./models/blog');
+const blogRoutes = require('./routes/blogRoutes');
 
 const app = express();
 
@@ -112,83 +110,14 @@ app.get('/', (req, res) => {
     res.redirect('/blogs');
 });
 
-app.get('/blogs', (req, res) => {
-
-    Blog.find().sort({ createdAt: -1 /* -1 means "descending" */ })
-        .then((result) => {
-            console.log(result);
-            
-            res.render('index', {
-                site_title,
-                page_title: 'Home',
-                blogs: result
-            });
-
-        })
-        .catch((error) => {
-            console.log("FAILED TO FIND");
-            console.log(error);
-        });
-});
-
 app.get('/about', (req, res) => {
     res.render('about', {
         site_title
     });
 });
 
-app.get('/blogs/create', (req, res) => {
-    res.render('create', {
-        site_title
-    });
-});
-
-app.post('/blogs', (req, res) => { // New blog posted
-
-    console.log(req.body);
-
-    const blog = new Blog( req.body );
-    // blog.title = req.body.title;
-    // blog.snippet = req.body.snippet;
-    // blog.body = req.body.body;
-
-    blog.save()
-        .then(() => res.redirect('/blogs'))
-        .catch((error) => {
-            console.log("FAILED TO FIND");
-            console.log(error);
-        });
-});
-
-
-app.get('/blogs/:blog_id', (req, res) => {
-    Blog.findById( req.params.blog_id )
-    .then((result) => {
-        
-        res.render('details', {
-            site_title, 
-            blog: result
-        });
-
-    })
-    .catch((error) => console.log(error));
-});
-
-
-app.delete('/blogs/:blog_id', (req, res) => {
-    
-    Blog.findByIdAndDelete( req.params.blog_id )
-        .then((result) => {
-            console.log('Deleted '+req.params.blog_id);
-            
-            //res.redirect('/blogs'); <---- can't do this because this is an ajax call
-
-            res.json({
-                redirect: '/blogs'
-            });
-        })
-        .catch((error) => console.log(error));
-});
+// Blog routes
+app.use(blogRoutes);
 
 // Redirect some old pages
 app.get('/about-us', (req, res) => {
