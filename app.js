@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true}));//<------- Pass incoming urlencod
 const targetDbClusterName = 'Cluster0';
 const targetDbName = 'node-blog';
 const targetDbUser = 'kquilty_db_user';
-const targetDbPass = 'ArwSpZ4KLwqzekZK';
+const targetDbPass = require('./private/db_password');
 const dbURI = 'mongodb+srv://' + targetDbUser + ':' + targetDbPass + '@cluster0.o5gyhoz.mongodb.net/' + targetDbName + '?retryWrites=true&w=majority&appName=' + targetDbClusterName + '';
 console.log("connecting to DB...");
 mongoose.connect(dbURI)

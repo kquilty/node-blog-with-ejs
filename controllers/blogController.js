@@ -1,7 +1,5 @@
 const Blog = require('../models/blog');
 
-const site_title = 'Node Blog';
-
 const blog_index = (req, res) => {
 
     Blog.find().sort({ createdAt: -1 /* -1 means "descending" */ })
@@ -9,7 +7,6 @@ const blog_index = (req, res) => {
             console.log(result);
             
             res.render('blogs/index', {
-                site_title,
                 page_title: 'Home',
                 blogs: result
             });
@@ -22,9 +19,7 @@ const blog_index = (req, res) => {
 }
 
 const blog_new_form = (req, res) => {
-    res.render('blogs/create', {
-        site_title
-    });
+    res.render('blogs/create');
 }
 
 const blog_new_post = (req, res) => {
@@ -49,7 +44,6 @@ const blog_view_details = (req, res) => {
         .then((result) => {
             
             res.render('blogs/details', {
-                site_title, 
                 blog: result
             });
 
@@ -57,7 +51,6 @@ const blog_view_details = (req, res) => {
         .catch((error) => {
             console.log(error);
             res.status(404).render('404', {
-                site_title,
                 custom_message: 'Invalid blog ID: "'+req.params.blog_id+'"'
             });
         });

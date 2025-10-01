@@ -1,1 +1,13 @@
-Start server (and watch for changes):  nodemon app
+To run:
+
+    1. Create private/db_passwords.js file:
+
+            const targetDbPass = 'some_password_here';
+            module.exports = targetDbPass;
+
+    2. Start server (and watch for changes):  
+    
+            nodemon app
+
+
+
