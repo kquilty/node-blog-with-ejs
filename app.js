@@ -57,48 +57,48 @@ app.use(morgan('dev'));
 
 
 // SANDBOX routes
-app.get('/add-blog', (req, res) => {
-    const blog = new Blog();
-    blog.title = 'my title';
-    blog.snippet = 'a snippet here';
-    blog.body = 'here is the body';
+/*
+        app.get('/add-blog', (req, res) => {
+            const blog = new Blog();
+            blog.title = 'my title';
+            blog.snippet = 'a snippet here';
+            blog.body = 'here is the body';
 
-    blog.save()
-    .then((result) => {
-        console.log("Saved new record.")
-        console.log(result);
-        res.send(result);
-    })
-    .catch((error) => {
-        console.log("FAILED TO SAVE");
-        console.log(error);
-    });
+            blog.save()
+            .then((result) => {
+                console.log("Saved new record.")
+                console.log(result);
+                res.send(result);
+            })
+            .catch((error) => {
+                console.log("FAILED TO SAVE");
+                console.log(error);
+            });
 
-});
-app.get('/all-blogs', (req, res) => {
-    Blog.find()
-    .then((result) => {
-        console.log(result);
-        res.send(result);
-    })
-    .catch((error) => {
-        console.log("FAILED TO FIND");
-        console.log(error);
-    });
-});
-app.get('/one-blog', (req, res) => {
-    Blog.findById('68dd4cee6348009fec37acee')
-    .then((result) => {
-        console.log(result);
-        res.send(result);
-    })
-    .catch((error) => {
-        console.log("FAILED TO FIND");
-        console.log(error);
-    });
-});
-
-
+        });
+        app.get('/all-blogs', (req, res) => {
+            Blog.find()
+            .then((result) => {
+                console.log(result);
+                res.send(result);
+            })
+            .catch((error) => {
+                console.log("FAILED TO FIND");
+                console.log(error);
+            });
+        });
+        app.get('/one-blog', (req, res) => {
+            Blog.findById('68dd4cee6348009fec37acee')
+            .then((result) => {
+                console.log(result);
+                res.send(result);
+            })
+            .catch((error) => {
+                console.log("FAILED TO FIND");
+                console.log(error);
+            });
+        });
+*/
 
 
 
@@ -106,27 +106,34 @@ app.get('/one-blog', (req, res) => {
 
 // Routes
 app.get('/', (req, res) => {
-    // "send" no longer needs content-type or status
-    // res.sendFile('./views/index.html', {root: __dirname});
-
-
-    const blogs = [
-        {title: 'Yoshi finds eggs', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-        {title: 'Mario finds stars', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-        {title: 'How to defeat bowser', snippet: 'Lorem ipsum dolor sit amet consectetur'},
-    ];
-
-    res.render('index', {
-        site_title,
-        page_title: 'Home',
-        blogs
-    });
+    res.redirect('/blogs');
 });
+
+app.get('/blogs', (req, res) => {
+
+    Blog.find().sort({ createdAt: -1 /* -1 means "descending" */ })
+        .then((result) => {
+            console.log(result);
+            
+            res.render('index', {
+                site_title,
+                page_title: 'Home',
+                blogs: result
+            });
+
+        })
+        .catch((error) => {
+            console.log("FAILED TO FIND");
+            console.log(error);
+        });
+});
+
 app.get('/about', (req, res) => {
     res.render('about', {
         site_title
     });
 });
+
 app.get('/blogs/create', (req, res) => {
     res.render('create', {
         site_title
