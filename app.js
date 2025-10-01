@@ -2,6 +2,9 @@ const express = require('express');
 const morgan = require('morgan');//<--------- middleware for logging
 const mongoose = require('mongoose');//<----- middleware for better DB interaction
 
+// Models
+const Blog = require('./models/blog');
+
 const app = express();
 
 app.set('view engine', 'ejs');// by default, looks in "./views"
@@ -12,8 +15,11 @@ app.use(express.static('public'));// Make "/public" accessable to the browser
 
 const site_title = 'Node Blog';
 
+
 // Connect to mongodb
-const dbURI = 'mongodb+srv://kquilty_db_user:ArwSpZ4KLwqzekZK@cluster0.o5gyhoz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+const targetClusterName = 'Cluster0';
+const targetDbName = 'node-blog';
+const dbURI = 'mongodb+srv://kquilty_db_user:ArwSpZ4KLwqzekZK@cluster0.o5gyhoz.mongodb.net/' + targetDbName + '?retryWrites=true&w=majority&appName=' + targetClusterName + '';
 console.log("connecting to DB...");
 mongoose.connect(dbURI)
     .then((result) => {
@@ -26,6 +32,7 @@ mongoose.connect(dbURI)
         console.log("CONNECTION FAILED");
         console.log(error);
     });
+
 
 /* Example: Custom log
 
@@ -41,6 +48,61 @@ mongoose.connect(dbURI)
 
 // Log request to console
 app.use(morgan('dev'));
+
+
+
+
+
+
+
+
+// SANDBOX routes
+app.get('/add-blog', (req, res) => {
+    const blog = new Blog();
+    blog.title = 'my title';
+    blog.snippet = 'a snippet here';
+    blog.body = 'here is the body';
+
+    blog.save()
+    .then((result) => {
+        console.log("Saved new record.")
+        console.log(result);
+        res.send(result);
+    })
+    .catch((error) => {
+        console.log("FAILED TO SAVE");
+        console.log(error);
+    });
+
+});
+app.get('/all-blogs', (req, res) => {
+    Blog.find()
+    .then((result) => {
+        console.log(result);
+        res.send(result);
+    })
+    .catch((error) => {
+        console.log("FAILED TO FIND");
+        console.log(error);
+    });
+});
+app.get('/one-blog', (req, res) => {
+    Blog.findById('68dd4cee6348009fec37acee')
+    .then((result) => {
+        console.log(result);
+        res.send(result);
+    })
+    .catch((error) => {
+        console.log("FAILED TO FIND");
+        console.log(error);
+    });
+});
+
+
+
+
+
+
 
 // Routes
 app.get('/', (req, res) => {
