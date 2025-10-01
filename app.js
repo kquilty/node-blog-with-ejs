@@ -10,16 +10,20 @@ const app = express();
 app.set('view engine', 'ejs');// by default, looks in "./views"
 
 // middleware & static files
-app.use(express.static('public'));// Make "/public" accessable to the browser
+app.use(express.static('public'));//<-------------------- Make "/public" accessable to the browser
+app.use(morgan('dev'));//<------------------------------- Log request to console
+app.use(express.urlencoded({ extended: true}));//<------- Pass incoming urlencoded data into "req.body"
 
 
 const site_title = 'Node Blog';
 
 
 // Connect to mongodb
-const targetClusterName = 'Cluster0';
+const targetDbClusterName = 'Cluster0';
 const targetDbName = 'node-blog';
-const dbURI = 'mongodb+srv://kquilty_db_user:ArwSpZ4KLwqzekZK@cluster0.o5gyhoz.mongodb.net/' + targetDbName + '?retryWrites=true&w=majority&appName=' + targetClusterName + '';
+const targetDbUser = 'kquilty_db_user';
+const targetDbPass = 'ArwSpZ4KLwqzekZK';
+const dbURI = 'mongodb+srv://' + targetDbUser + ':' + targetDbPass + '@cluster0.o5gyhoz.mongodb.net/' + targetDbName + '?retryWrites=true&w=majority&appName=' + targetDbClusterName + '';
 console.log("connecting to DB...");
 mongoose.connect(dbURI)
     .then((result) => {
@@ -34,7 +38,7 @@ mongoose.connect(dbURI)
     });
 
 
-/* Example: Custom log
+/* Example: Custom log (now handled by morgan above)
 
     app.use((req, res, next) => {
     console.log('new request made:');
@@ -46,8 +50,7 @@ mongoose.connect(dbURI)
 
 */
 
-// Log request to console
-app.use(morgan('dev'));
+
 
 
 
@@ -138,6 +141,23 @@ app.get('/blogs/create', (req, res) => {
     res.render('create', {
         site_title
     });
+});
+
+app.post('/blogs', (req, res) => { // New blog posted
+
+    console.log(req.body);
+
+    const blog = new Blog( req.body );
+    // blog.title = req.body.title;
+    // blog.snippet = req.body.snippet;
+    // blog.body = req.body.body;
+
+    blog.save()
+        .then(() => res.redirect('/blogs'))
+        .catch((error) => {
+            console.log("FAILED TO FIND");
+            console.log(error);
+        });
 });
 
 

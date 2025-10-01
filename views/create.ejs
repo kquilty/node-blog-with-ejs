@@ -5,7 +5,25 @@
 
     <div class="content">
 
-        I am the <b>create</b> file.
+        <form action="/blogs" method="POST">
+
+            <div>
+                <label for="title">Title:</label>
+                <br /><input type="text" id="title" name="title" required>
+            </div>
+
+            <div>
+                <label for="snippet">Snippet:</label>
+                <br /><input type="text" id="snippet" name="snippet" required>
+            </div>
+
+            <div>
+                <label for="body">Body:</label>
+                <br /><textarea id="body" name="body" required></textarea>
+            </div>
+
+            <button>Submit</button>
+        </form>
 
     </div>
     
