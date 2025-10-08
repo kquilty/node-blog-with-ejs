@@ -5,7 +5,7 @@
 
     <div class="content">
 
-        <% if (custom_message) { %>
+        <% if (typeof custom_message !== 'undefined') { %>
             <%= custom_message %>
         <% } else if (attempted_url) { %>
             This so called <span style="color: #a11b1b">"<%= attempted_url.replace(/<\/?[^>]+(>|$)/g, "") %>"</span> page doesn't exist.

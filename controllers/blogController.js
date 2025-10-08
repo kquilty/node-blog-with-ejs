@@ -4,18 +4,13 @@ const blog_index = (req, res) => {
 
     Blog.find().sort({ createdAt: -1 /* -1 means "descending" */ })
         .then((result) => {
-            console.log(result);
-            
             res.render('blogs/index', {
                 page_title: 'Home',
                 blogs: result
             });
 
         })
-        .catch((error) => {
-            console.log("FAILED TO FIND");
-            console.log(error);
-        });
+        .catch((error) => console.log(error) );
 }
 
 const blog_new_form = (req, res) => {
@@ -24,19 +19,14 @@ const blog_new_form = (req, res) => {
 
 const blog_new_post = (req, res) => {
 
-    console.log(req.body);
+    const posted_data = req.body;
+    console.log(posted_data);
 
-    const blog = new Blog( req.body );
-    // blog.title = req.body.title;
-    // blog.snippet = req.body.snippet;
-    // blog.body = req.body.body;
+    const blog = new Blog( posted_data );
 
     blog.save()
         .then(() => res.redirect('/'))
-        .catch((error) => {
-            console.log("FAILED TO FIND");
-            console.log(error);
-        });
+        .catch((error) => console.log(error) );
 }
 
 const blog_view_details = (req, res) => {

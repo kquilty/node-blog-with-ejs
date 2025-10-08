@@ -16,7 +16,7 @@ app.use(morgan('dev'));//<------------------- Log request to console
 // DATABASE --------------------------------------------------------------------------------------
 // 1. Connect to DB (mongodb, using "mongoose")
 // 2. Begin watching
-const mongoose = require('mongoose');//<----- middleware for better DB interaction
+const mongoose = require('mongoose');//<----- middleware for better DB interaction (Models, etc)
 const targetDbClusterName = 'Cluster0';
 const targetDbName = 'node-blog';
 const targetDbUser = 'kquilty_db_user';
@@ -26,6 +26,7 @@ console.log("connecting to DB...");
 mongoose.connect(dbURI)
     .then((result) => {
         console.log("Connected");
+        console.log("Listening at: http://localhost:3000/");
         
         // Safe to begin listening
         app.listen(3000);

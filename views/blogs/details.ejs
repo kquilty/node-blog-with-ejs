@@ -7,22 +7,28 @@
 
         I am blog <%= blog._id %>
 
-        <h2><%= blog.title %></h2>
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+                <h2><%= blog.title %></h2>
 
-        <div class="blog-details-snippet">
-            <%= blog.snippet %>
-        </div>
+                <div class="blog-details-snippet">
+                    <%= blog.snippet %>
+                </div>
 
-        <div class="blog-details-body">
-            <%= blog.body %>
-        </div>
+                <div class="blog-details-body">
+                    <%= blog.body %>
+                </div>
+            </div>
 
-        <div class="delete-icon-wrapper">
-            <span class="delete-icon">
-                <a onclick="return handleDeleteClick('<%= blog._id %>')">
-                    <img src="/images/trashcan.svg" alt="Delete">
-                </a>
-            </span>
+            <div>
+                <div class="delete-icon-wrapper">
+                    <span class="delete-icon">
+                        <a onclick="return handleDeleteClick('<%= blog._id %>')">
+                            <img src="/images/trashcan.svg" alt="Delete">
+                        </a>
+                    </span>
+                </div>
+            </div>
         </div>
 
     </div>
