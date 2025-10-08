@@ -5,24 +5,19 @@
 
     <div class="content">
 
-        <form action="/blogs" method="POST">
+        <form action="/blogs" method="POST" class="create-blog-form">
 
-            <div>
                 <label for="title">Title:</label>
-                <br /><input type="text" id="title" name="title" required>
-            </div>
-
-            <div>
+                <input type="text" id="title" name="title" required>
+            
                 <label for="snippet">Snippet:</label>
-                <br /><input type="text" id="snippet" name="snippet" required>
-            </div>
-
-            <div>
+                <input type="text" id="snippet" name="snippet" required>
+            
                 <label for="body">Body:</label>
-                <br /><textarea id="body" name="body" required></textarea>
-            </div>
+                <textarea id="body" name="body" required></textarea>
 
-            <button>Submit</button>
+                <button>Submit</button>
+
         </form>
 
     </div>
